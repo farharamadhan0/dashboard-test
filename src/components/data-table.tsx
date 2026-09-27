@@ -12,13 +12,9 @@ import {
   rowSortingFeature,
   tableFeatures,
   useTable,
-  type ColumnFiltersState,
-  type ColumnVisibilityState,
-  type SortingState,
 } from "@tanstack/react-table"
 import { z } from "zod"
 
-import { Badge } from "#components/ui/badge"
 import { Button } from "#components/ui/button"
 import { Input } from "#components/ui/input"
 import { Label } from "#components/ui/label"
@@ -38,11 +34,8 @@ import {
   TableHeader,
   TableRow,
 } from "#components/ui/table"
-import {
-  Tabs,
-  TabsContent,
-} from "#components/ui/tabs"
 import { ChevronsLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronsRightIcon } from "lucide-react"
+import type { schema } from "../const"
 
 // New in v9: declare the features this table uses — anything you don't
 // register is tree-shaken out of the bundle.
@@ -62,15 +55,7 @@ const columnHelper = createColumnHelper<
   z.infer<typeof schema>
 >()
 
-export const schema = z.object({
-  _id: z.number(),
-  name: z.string(),
-  email: z.string(),
-  gender: z.string(),
-  company: z.string(),
-  phone: z.string(),
-  registered: z.string(),
-})
+
 
 const columns = columnHelper.columns([
   columnHelper.accessor("name", {
@@ -122,7 +107,7 @@ export function DataTable({
   data: z.infer<typeof schema>[]
 }) {
   const [search, setSearch] = React.useState("")
-  const [data, setData] = React.useState(() => initialData)
+  const [data] = React.useState(() => initialData)
   // const [searchedData, setSearchedData] = React.useState(() => initialData)
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
